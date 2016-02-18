@@ -2,6 +2,9 @@ package hello;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,7 +13,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "TUsers")
 
-public class UserInfo {
+public class UserInfo implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	UserInfo() {
 	}

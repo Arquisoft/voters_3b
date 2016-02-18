@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import hello.UserInfo;
 
-public class CrudDB implements CrudRepository<UserInfo, Serializable>{
+public class VoterService implements CrudRepository<UserInfo, Serializable>{
 
 	@Override
 	public long count() {
