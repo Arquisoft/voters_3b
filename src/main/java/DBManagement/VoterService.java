@@ -4,9 +4,14 @@ import java.io.Serializable;
 
 import org.springframework.data.repository.CrudRepository;
 
+import hello.UserNotFoundException;
 import hello.UserInfo;
 
 public class VoterService implements CrudRepository<UserInfo, Serializable>{
+	
+	public UserInfo findByEmailAndPassword(String email, String password) throws UserNotFoundException{
+		return new GetVP().findByEmailAndPassword(email, password);
+	}
 
 	@Override
 	public long count() {

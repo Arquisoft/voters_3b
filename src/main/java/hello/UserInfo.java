@@ -49,12 +49,19 @@ public class UserInfo implements Serializable {
 		this.password = password;
 	}
 
-	public UserInfo(String name, String NIF, String email, Long pollingStationCode, String password) {
-		this.setName(name);
-		this.NIF = NIF;
+	public UserInfo(String email, String password, String name, String NIF, Long pollingStationCode, Long id) {
 		this.email = email;
-		this.pollingStationCode = pollingStationCode;
 		this.password = password;
+		this.name = name;
+		this.NIF = NIF;
+		this.pollingStationCode = pollingStationCode;
+		this.id = id;
+	}
+
+	public UserInfo(UserInfo ui) {
+		new UserInfo(ui.email,ui.password,
+				ui.name,ui.NIF,
+				ui.pollingStationCode,ui.id);
 	}
 
 	public String getName() {

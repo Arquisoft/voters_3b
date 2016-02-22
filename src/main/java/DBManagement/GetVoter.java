@@ -1,7 +1,10 @@
 package DBManagement;
 
+import hello.UserNotFoundException;
+import hello.UserInfo;
+
 public interface GetVoter {
 	
-	boolean check(String email, String password);
+	UserInfo findByEmailAndPassword(String email, String password)  throws UserNotFoundException ;
 
 }
