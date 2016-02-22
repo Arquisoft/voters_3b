@@ -1,1 +1,1 @@
-java -classpath hsqldb.jar org.hsqldb.Server
+java -classpath ../lib/hsqldb.jar org.hsqldb.Server

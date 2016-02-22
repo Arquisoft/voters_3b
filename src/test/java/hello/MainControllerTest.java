@@ -46,7 +46,8 @@ public class MainControllerTest {
 	public void getUser() throws Exception {
 		String userURI = base.toString() + "/user";  
 		ResponseEntity<String> response = template.getForEntity(userURI, String.class);
-		UserInfo expected = new UserInfo("pepe","0");
+		UserInfo expected = new UserInfo("pepe@gmail.com","p3p3", "Pepe", "012345678P", 111222333L, 1L);
+		assertThat(response.getBody(),equalTo(expected.toString()));
 	}
 
 }
