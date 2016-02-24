@@ -1,10 +1,8 @@
-package hello;
+package voterAccess;
+
+import static org.junit.Assert.*;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -29,10 +27,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.WebApplicationContext;
 
-import es.uniovi.asw.Application;
-import es.uniovi.asw.types.ChangePass;
-import es.uniovi.asw.types.UserInfo;
-import es.uniovi.asw.types.UserPass;
+import hello.Application;
+import hello.MainController;
+import hello.Peticion;
+import hello.UserInfo;
+import hello.UserNotFoundException;
+import VoterAccess.EmailNotFoundException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
@@ -60,26 +60,6 @@ public class MainControllerTest {
 		
 	}
 	
-	/*
-	@Test
-	public void getUser() throws Exception {
-		String userURI = base.toString() + "/user";
-		UserInfo expected = new UserInfo("David", "1234546789J", "uo212486", "123A");
-		UserPass requestData = new UserPass("uo212486", "password");
-		// retorna error 406. Puede que falte el accept aplication/json, no se.
-		ResponseEntity<UserInfo> response = template.postForEntity(userURI, requestData, UserInfo.class);
-		assertThat(response.getStatusCode(), equalTo(Status.OK));
-		assertThat(response.getBody(), equalTo(expected));
-	}*/
-	
-	/*
-	 * 
-	 * 
-	 * BLOQUE DE TESTS DEDICADOS AL: Peticion, respuesta en Json. 
-	 * 
-	 * 
-	 */
-
 	@Test
 	public void getLanding() throws Exception {
 		String userURI = base.toString() + "/user";
@@ -87,3 +67,34 @@ public class MainControllerTest {
 		assertThat(response.hasBody(), equalTo(true));
 		if (porPantalla) { System.out.println(response.getBody()); }
 	}
+	
+	@Test	
+	public void printScreen() throws Exception {
+		MvcResult m = (mvc.perform(post("/user")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content("{\"login\":\"pepe@gmail.com\", \"password\": \"p3p3\"}")
+		).andReturn());
+		System.out.println("RESULTADO JSON OBTENIDO: "+ m.getResponse().getContentAsString());
+	}
+	
+	//USUARIO CORRECTO
+	@Test
+	public void postUserOK() throws Exception {
+		MainController m = new MainController();
+		Peticion p = new Peticion("pepe@gmail.com", "p3p3");
+		UserInfo user = m.user(p);
+		assertTrue(user.getPollingStationCode() == 111222333);
+		assertTrue(user.getName().equals("Pepe"));
+		assertTrue(user.getNIF().equals("012345678P"));
+	}
+	
+	//USUARIO NO EXISTENTE
+	@Test(expected = UserNotFoundException.class)
+	public void postUserUnknow() throws Exception {		
+		MainController m = new MainController();
+		Peticion p = new Peticion("noExiste@gmail.com", "p3p3");
+
+		assertTrue(m.user(p) == null); 
+	}
+	
+}
