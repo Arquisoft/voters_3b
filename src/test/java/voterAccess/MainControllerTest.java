@@ -97,4 +97,21 @@ public class MainControllerTest {
 		assertTrue(m.user(p) == null); 
 	}
 	
+	//USUARIO EXISTENTE PERO FALLA EN LA PASSWORD
+	@Test(expected = UserNotFoundException.class)
+	public void postUserPassword() throws Exception {		
+		MainController m = new MainController();
+		Peticion p = new Peticion("pepe@gmail.com", "p4c4");
+
+		assertTrue(m.user(p) == null); 
+	}
+	
+	//USUARIO NO INTRODUCE BIEN EL EMAIL
+	@Test(expected = EmailNotFoundException.class)
+	public void postUserBadPass() throws Exception {		
+		MainController m = new MainController();
+		Peticion p = new Peticion("noEsCorrecto", "p3p3");
+
+		assertTrue(m.user(p) == null);  
+	}
 }
