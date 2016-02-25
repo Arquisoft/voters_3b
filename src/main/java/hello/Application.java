@@ -18,9 +18,6 @@ public class Application {
 			EntityManagerFactory emf = Persistence.createEntityManagerFactory("voters");
 
 			emf.close();
-
-			System.out.println("--> Si no hay excepciones todo va bien");
-			System.out.println("\n\t (O no hay ninguna clase mapeada)");
 		}
 	}
 }

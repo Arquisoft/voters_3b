@@ -18,4 +18,10 @@ public class Peticion {
 		this.password = password;
 	}
 	
+	public Peticion(String email, String password) {
+		super();
+		this.email = email;
+		this.password = password;
+	}
+	
 }
